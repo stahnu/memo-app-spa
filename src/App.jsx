@@ -1,25 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
 
-let nextId = 3;
-const initialNotes = [
-  { id: 0, content: "メモ1\nメモ1の内容\nメモ1の内容\nメモ1の内容" },
-  { id: 1, content: "メモ2\nメモ2の内容\nメモ2の内容\nメモ2の内容" },
-  { id: 2, content: "メモ3\nメモ3の内容\nメモ3の内容\nメモ3の内容" },
-];
-
 function App() {
-  const [notes, setNotes] = useState(initialNotes);
+  const [notes, setNotes] = useState(() => {
+    const storedNotes = localStorage.getItem("notes");
+    return storedNotes ? JSON.parse(storedNotes) : [];
+  });
   const [selectedId, setSelectedId] = useState(null);
 
-  function handleAddNote() {
-    const newNote = { id: nextId, content: "新規メモ" };
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
+  function handleAddNote() {
+    const newNote = { id: crypto.randomUUID(), content: "新規メモ" };
     setNotes([...notes, newNote]);
     setSelectedId(newNote.id);
-
-    nextId++;
   }
 
   function handleUpdateNote(content) {
