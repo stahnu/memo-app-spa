@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { NoteList } from "./NoteList.jsx";
+import { NoteEditor } from "./NoteEditor.jsx";
 
 let nextId = 3;
 const initialNotes = [
@@ -10,67 +12,44 @@ const initialNotes = [
 function App() {
   const [notes, setNotes] = useState(initialNotes);
   const [selectedId, setSelectedId] = useState(null);
-  const [editingContent, setEditingContent] = useState("");
-
-  function resetEditor() {
-    setSelectedId(null);
-    setEditingContent("");
-  }
-
-  function handleSelectNote(note) {
-    setSelectedId(note.id);
-    setEditingContent(note.content);
-  }
 
   function handleAddNote() {
     const newNote = { id: nextId, content: "新規メモ" };
 
     setNotes([...notes, newNote]);
-    handleSelectNote(newNote);
+    setSelectedId(newNote.id);
 
     nextId++;
   }
 
-  function handleChangeNote() {
+  function handleUpdateNote(content) {
     setNotes(
       notes.map((note) =>
-        note.id === selectedId ? { ...note, content: editingContent } : note,
+        note.id === selectedId ? { ...note, content } : note,
       ),
     );
-    resetEditor();
   }
 
   function handleDeleteNote() {
     setNotes(notes.filter((note) => note.id !== selectedId));
-    resetEditor();
   }
 
   return (
     <>
       <h1>メモアプリ</h1>
-      <ul>
-        {notes.map((note) => (
-          <li key={note.id}>
-            <button
-              onClick={() => {
-                handleSelectNote(note);
-              }}
-            >
-              {note.content.split("\n")[0]}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <NoteList notes={notes} onSelect={setSelectedId} />
       <button onClick={handleAddNote}>+</button>
-      {selectedId && (
-        <>
-          <textarea
-            value={editingContent}
-            onChange={(e) => setEditingContent(e.target.value)}
-          ></textarea>
-          <button onClick={handleChangeNote}>更新</button>
-          <button onClick={handleDeleteNote}>削除</button>
-        </>
+
+      {selectedId !== null && (
+        <NoteEditor
+          key={selectedId}
+          note={notes.find((note) => note.id === selectedId)}
+          onUpdate={handleUpdateNote}
+          onDelete={handleDeleteNote}
+          onClose={() => {
+            setSelectedId(null);
+          }}
+        />
       )}
     </>
   );
