@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NotesDispatchContext } from "./NotesContext.js";
 
-export function NoteEditor({ note, onUpdate, onDelete, onClose }) {
-  const [editingContent, setEditingContent] = useState(note.content);
+export function NoteEditor({ selectedNote, onClose }) {
+  const dispatch = useContext(NotesDispatchContext);
+
+  const [editingContent, setEditingContent] = useState(selectedNote.content);
 
   function handleUpdate() {
-    onUpdate(editingContent);
+    dispatch({
+      type: "update",
+      id: selectedNote.id,
+      content: editingContent,
+    });
     onClose();
   }
 
   function handleDelete() {
-    onDelete();
+    dispatch({
+      type: "delete",
+      id: selectedNote.id,
+    });
     onClose();
   }
 
