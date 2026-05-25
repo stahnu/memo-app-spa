@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { LoginContext } from "./LoginContext.js";
 import { useNotes, useNotesDispatch } from "./useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
@@ -27,7 +28,7 @@ function App() {
   }
 
   return (
-    <>
+    <LoginContext value={isLoggedIn}>
       <h1>メモアプリ</h1>
       <button
         onClick={() => {
@@ -41,14 +42,13 @@ function App() {
       {selectedId !== null && (
         <NoteEditor
           key={selectedId}
-          isLoggedIn={isLoggedIn}
           selectedNote={notes.find((note) => note.id === selectedId)}
           onClose={() => {
             setSelectedId(null);
           }}
         />
       )}
-    </>
+    </LoginContext>
   );
 }
 

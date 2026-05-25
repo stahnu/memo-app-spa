@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useLogin } from "./useLogin.js";
 import { useNotesDispatch } from "./useNotes.js";
 
-export function NoteEditor({ selectedNote, onClose, isLoggedIn }) {
+export function NoteEditor({ selectedNote, onClose }) {
+  const isLoggedIn = useLogin();
   const dispatch = useNotesDispatch();
 
   const [editingContent, setEditingContent] = useState(selectedNote.content);
@@ -27,6 +29,7 @@ export function NoteEditor({ selectedNote, onClose, isLoggedIn }) {
     <>
       <textarea
         value={editingContent}
+        readOnly={!isLoggedIn}
         onChange={(e) => {
           setEditingContent(e.target.value);
         }}
