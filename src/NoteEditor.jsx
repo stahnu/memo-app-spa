@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
-import { NotesDispatchContext } from "./NotesContext.js";
+import { useState } from "react";
+import { useNotesDispatch } from "./useNotes.js";
 
 export function NoteEditor({ selectedNote, onClose }) {
-  const dispatch = useContext(NotesDispatchContext);
+  const dispatch = useNotesDispatch();
 
   const [editingContent, setEditingContent] = useState(selectedNote.content);
 

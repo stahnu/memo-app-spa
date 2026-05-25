@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { NotesContext } from "./NotesContext.js";
+import { useNotes } from "./useNotes.js";
 import { NoteListItem } from "./NoteListItem.jsx";
 
 export function NoteList({ onSelect }) {
-  const notes = useContext(NotesContext);
+  const notes = useNotes();
 
   return (
     <>

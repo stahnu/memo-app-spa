@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useNotes, useNotesDispatch } from "./useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
-import { NotesContext, NotesDispatchContext } from "./NotesContext.js";
 
 function App() {
-  const notes = useContext(NotesContext);
-  const dispatch = useContext(NotesDispatchContext);
+  const notes = useNotes();
+  const dispatch = useNotesDispatch();
 
   const [selectedId, setSelectedId] = useState(null);
 
