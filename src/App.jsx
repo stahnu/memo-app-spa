@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { LoginContext } from "./LoginContext.js";
+import { useState } from "react";
+import { useLogin, useSetLogin } from "./useLogin.js";
 import { useNotes, useNotesDispatch } from "./useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
@@ -7,16 +7,10 @@ import { NoteEditor } from "./NoteEditor.jsx";
 function App() {
   const notes = useNotes();
   const dispatch = useNotesDispatch();
+  const isLoggedIn = useLogin();
+  const setLogin = useSetLogin();
 
   const [selectedId, setSelectedId] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
-    return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-  }, [isLoggedIn]);
 
   function handleAddNote() {
     const newNote = { id: crypto.randomUUID(), content: "新規メモ" };
@@ -28,11 +22,11 @@ function App() {
   }
 
   return (
-    <LoginContext value={isLoggedIn}>
+    <>
       <h1>メモアプリ</h1>
       <button
         onClick={() => {
-          setIsLoggedIn(!isLoggedIn);
+          setLogin(!isLoggedIn);
         }}
       >
         {isLoggedIn ? "ログアウト" : "ログイン"}
@@ -48,7 +42,7 @@ function App() {
           }}
         />
       )}
-    </LoginContext>
+    </>
   );
 }
 
