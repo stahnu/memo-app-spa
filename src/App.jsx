@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useLogin, useSetLogin } from "./useLogin.js";
-import { useNotes, useNotesDispatch } from "./useNotes.js";
+import { useLogin, useSetLogin } from "./login/useLogin.js";
+import { useNotes, useNotesDispatch } from "./notes/useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
 

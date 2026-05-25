@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useLogin } from "./useLogin.js";
-import { useNotesDispatch } from "./useNotes.js";
+import { useLogin } from "./login/useLogin.js";
+import { useNotesDispatch } from "./notes/useNotes.js";
 
 export function NoteEditor({ selectedNote, onClose }) {
   const isLoggedIn = useLogin();

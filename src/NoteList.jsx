@@ -1,4 +1,4 @@
-import { useNotes } from "./useNotes.js";
+import { useNotes } from "./notes/useNotes.js";
 import { NoteListItem } from "./NoteListItem.jsx";
 
 export function NoteList({ onSelect }) {
