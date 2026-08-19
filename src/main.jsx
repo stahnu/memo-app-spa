@@ -1,12 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
-import { NotesProvider } from "./NotesProvider.jsx";
+import { LoginProvider } from "./login/LoginProvider.jsx";
+import { NotesProvider } from "./notes/NotesProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <NotesProvider>
-      <App />
-    </NotesProvider>
+    <LoginProvider>
+      <NotesProvider>
+        <App />
+      </NotesProvider>
+    </LoginProvider>
   </StrictMode>,
 );

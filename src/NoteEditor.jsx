@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useNotesDispatch } from "./useNotes.js";
+import { useLogin } from "./login/useLogin.js";
+import { useNotesDispatch } from "./notes/useNotes.js";
 
 export function NoteEditor({ selectedNote, onClose }) {
+  const isLoggedIn = useLogin();
   const dispatch = useNotesDispatch();
 
   const [editingContent, setEditingContent] = useState(selectedNote.content);
@@ -27,12 +29,17 @@ export function NoteEditor({ selectedNote, onClose }) {
     <>
       <textarea
         value={editingContent}
+        readOnly={!isLoggedIn}
         onChange={(e) => {
           setEditingContent(e.target.value);
         }}
       ></textarea>
-      <button onClick={handleUpdate}>更新</button>
-      <button onClick={handleDelete}>削除</button>
+      {isLoggedIn && (
+        <>
+          <button onClick={handleUpdate}>更新</button>
+          <button onClick={handleDelete}>削除</button>
+        </>
+      )}
     </>
   );
 }

@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useNotes, useNotesDispatch } from "./useNotes.js";
+import { useLogin, useSetLogin } from "./login/useLogin.js";
+import { useNotes, useNotesDispatch } from "./notes/useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
 
 function App() {
   const notes = useNotes();
   const dispatch = useNotesDispatch();
+  const isLoggedIn = useLogin();
+  const setLogin = useSetLogin();
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -21,8 +24,15 @@ function App() {
   return (
     <>
       <h1>メモアプリ</h1>
+      <button
+        onClick={() => {
+          setLogin(!isLoggedIn);
+        }}
+      >
+        {isLoggedIn ? "ログアウト" : "ログイン"}
+      </button>
       <NoteList onSelect={setSelectedId} />
-      <button onClick={handleAddNote}>+</button>
+      {isLoggedIn && <button onClick={handleAddNote}>+</button>}
       {selectedId !== null && (
         <NoteEditor
           key={selectedId}
