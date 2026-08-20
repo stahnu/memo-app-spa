@@ -7,7 +7,7 @@ import { NoteEditor } from "./NoteEditor.jsx";
 function App() {
   const notes = useNotes();
   const dispatch = useNotesDispatch();
-  const { isLoggedIn, setIsLoggedIn } = useLogin();
+  const { isLoggedIn, toggleLogin } = useLogin();
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -25,7 +25,7 @@ function App() {
       <h1>メモアプリ</h1>
       <button
         onClick={() => {
-          setIsLoggedIn(!isLoggedIn);
+          toggleLogin();
         }}
       >
         {isLoggedIn ? "ログアウト" : "ログイン"}

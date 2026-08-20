@@ -11,9 +11,11 @@ export function LoginProvider({ children }) {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
 
+  function toggleLogin() {
+    setIsLoggedIn((prev) => !prev);
+  }
+
   return (
-    <LoginContext value={{ isLoggedIn, setIsLoggedIn }}>
-      {children}
-    </LoginContext>
+    <LoginContext value={{ isLoggedIn, toggleLogin }}>{children}</LoginContext>
   );
 }
