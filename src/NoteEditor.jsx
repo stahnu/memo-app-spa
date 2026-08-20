@@ -27,15 +27,14 @@ export function NoteEditor({ selectedNote, onClose }) {
 
   return (
     <>
-      <textarea
-        value={editingContent}
-        readOnly={!isLoggedIn}
-        onChange={(e) => {
-          setEditingContent(e.target.value);
-        }}
-      ></textarea>
       {isLoggedIn && (
         <>
+          <textarea
+            value={editingContent}
+            onChange={(e) => {
+              setEditingContent(e.target.value);
+            }}
+          ></textarea>
           <button onClick={handleUpdate}>更新</button>
           <button onClick={handleDelete}>削除</button>
         </>
