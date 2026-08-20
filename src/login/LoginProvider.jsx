@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LoginContext, SetLoginContext } from "./LoginContext.js";
+import { LoginContext } from "./LoginContext.js";
 
 export function LoginProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -12,8 +12,8 @@ export function LoginProvider({ children }) {
   }, [isLoggedIn]);
 
   return (
-    <LoginContext value={isLoggedIn}>
-      <SetLoginContext value={setIsLoggedIn}>{children}</SetLoginContext>
+    <LoginContext value={{ isLoggedIn, setIsLoggedIn }}>
+      {children}
     </LoginContext>
   );
 }

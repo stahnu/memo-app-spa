@@ -3,7 +3,7 @@ import { useLogin } from "./login/useLogin.js";
 import { useNotesDispatch } from "./notes/useNotes.js";
 
 export function NoteEditor({ selectedNote, onClose }) {
-  const isLoggedIn = useLogin();
+  const { isLoggedIn } = useLogin();
   const dispatch = useNotesDispatch();
 
   const [editingContent, setEditingContent] = useState(selectedNote.content);

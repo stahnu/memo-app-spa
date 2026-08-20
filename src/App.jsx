@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLogin, useSetLogin } from "./login/useLogin.js";
+import { useLogin } from "./login/useLogin.js";
 import { useNotes, useNotesDispatch } from "./notes/useNotes.js";
 import { NoteList } from "./NoteList.jsx";
 import { NoteEditor } from "./NoteEditor.jsx";
@@ -7,8 +7,7 @@ import { NoteEditor } from "./NoteEditor.jsx";
 function App() {
   const notes = useNotes();
   const dispatch = useNotesDispatch();
-  const isLoggedIn = useLogin();
-  const setLogin = useSetLogin();
+  const { isLoggedIn, setIsLoggedIn } = useLogin();
 
   const [selectedId, setSelectedId] = useState(null);
 
@@ -26,7 +25,7 @@ function App() {
       <h1>メモアプリ</h1>
       <button
         onClick={() => {
-          setLogin(!isLoggedIn);
+          setIsLoggedIn(!isLoggedIn);
         }}
       >
         {isLoggedIn ? "ログアウト" : "ログイン"}
