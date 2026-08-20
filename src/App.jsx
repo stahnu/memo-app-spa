@@ -8,6 +8,8 @@ function App() {
   const dispatch = useNotesDispatch();
 
   const [selectedId, setSelectedId] = useState(null);
+  const [editingContents, setEditingContents] = useState({});
+  const selectedNote = notes.find((note) => note.id === selectedId);
 
   function handleAddNote() {
     const newNote = { id: crypto.randomUUID(), content: "新規メモ" };
@@ -18,6 +20,44 @@ function App() {
     setSelectedId(newNote.id);
   }
 
+  function handleUpdateNote() {
+    dispatch({
+      type: "update",
+      id: selectedId,
+      content: editingContents[selectedId],
+    });
+
+    discardEditingContents();
+    closeEditor();
+  }
+
+  function handleDeleteNote() {
+    dispatch({
+      type: "delete",
+      id: selectedId,
+    });
+    closeEditor();
+  }
+
+  function handleChangeContent(content) {
+    setEditingContents((prev) => ({
+      ...prev,
+      [selectedId]: content,
+    }));
+  }
+
+  function discardEditingContents() {
+    setEditingContents((prev) => {
+      const next = { ...prev };
+      delete next[selectedId];
+      return next;
+    });
+  }
+
+  function closeEditor() {
+    setSelectedId(null);
+  }
+
   return (
     <>
       <h1>メモアプリ</h1>
@@ -26,10 +66,10 @@ function App() {
       {selectedId !== null && (
         <NoteEditor
           key={selectedId}
-          selectedNote={notes.find((note) => note.id === selectedId)}
-          onClose={() => {
-            setSelectedId(null);
-          }}
+          editingContent={editingContents[selectedId] ?? selectedNote.content}
+          onChange={handleChangeContent}
+          onUpdate={handleUpdateNote}
+          onDelete={handleDeleteNote}
         />
       )}
     </>
